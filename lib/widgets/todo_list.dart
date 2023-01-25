@@ -16,22 +16,14 @@ class TodoList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        Card(
-          child: Column(
-            children: <Widget>[
-              ...todosList
-                  .map(
-                    (todo) => TodoItem(
-                      todo: todo,
-                      updateTodoDone: updateTodoDone,
-                    ),
-                  )
-                  .toList(),
-            ],
-          ),
-        )
-      ],
+      children: todosList
+          .map(
+            (todo) => TodoItem(
+              todo: todo,
+              updateTodoDone: updateTodoDone,
+            ),
+          )
+          .toList(),
     );
   }
 }
