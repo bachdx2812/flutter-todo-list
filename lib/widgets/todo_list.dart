@@ -15,15 +15,19 @@ class TodoList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: todosList
-          .map(
-            (todo) => TodoItem(
-              todo: todo,
-              updateTodoDone: updateTodoDone,
-            ),
-          )
-          .toList(),
+    return SizedBox(
+      height: 600,
+      child: ListView.builder(
+        itemCount: todosList.length,
+        itemBuilder: (context, index) {
+          var todo = todosList[index];
+
+          return TodoItem(
+            todo: todo,
+            updateTodoDone: updateTodoDone,
+          );
+        },
+      ),
     );
   }
 }

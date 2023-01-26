@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:todo_list/widgets/todo_list.dart';
+
+import './widgets/todo_list.dart';
+import './widgets/todo_search.dart';
+import './widgets/todo_new.dart';
 
 import 'models/todo.dart';
 
@@ -50,21 +53,63 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
+  void _createNewToto(Todo todo) {
+    setState(() {
+      _todosList.insert(0, todo);
+    });
+  }
+
+  void _startAddNewTodo(BuildContext ctx) {
+    showModalBottomSheet(
+        context: ctx,
+        builder: (_) {
+          return GestureDetector(
+            onTap: () {},
+            behavior: HitTestBehavior.opaque,
+            child: TodoNew(
+              createNewTodo: _createNewToto,
+            ),
+          );
+        });
+  }
+
+  String _searchText = "";
+
+  List<Todo> get _filteredList =>
+      _todosList.where((todo) => todo.title.contains(_searchText)).toList();
+
+  void _searchTodo(String text) {
+    setState(() {
+      _searchText = text;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
+            TodoSearch(
+              searchText: _searchText,
+              searchTodo: _searchTodo,
+            ),
             TodoList(
-              todosList: _todosList,
+              todosList: _filteredList,
               updateTodoDone: _updateTodoDone,
             ),
           ],
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _startAddNewTodo(context),
+        child: const Icon(Icons.add),
       ),
     );
   }
