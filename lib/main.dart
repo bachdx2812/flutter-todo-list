@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './widgets/todo_list.dart';
 import './widgets/todo_search.dart';
 import './widgets/todo_new.dart';
+import './widgets/todo_item.dart';
 
 import 'models/todo.dart';
 
@@ -54,29 +55,37 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _createNewToto(Todo todo) {
-    setState(() {
-      _todosList.insert(0, todo);
-    });
+    setState(() => _todosList.insert(0, todo));
+    _todosListKey.currentState?.insertItem(0);
   }
 
   void _startAddNewTodo(BuildContext ctx) {
     showModalBottomSheet(
-        context: ctx,
-        builder: (_) {
-          return GestureDetector(
-            onTap: () {},
-            behavior: HitTestBehavior.opaque,
-            child: TodoNew(
-              createNewTodo: _createNewToto,
-            ),
-          );
-        });
+      context: ctx,
+      builder: (_) {
+        return GestureDetector(
+          onTap: () {},
+          behavior: HitTestBehavior.opaque,
+          child: TodoNew(
+            createNewTodo: _createNewToto,
+          ),
+        );
+      },
+    );
   }
 
   String _searchText = "";
+  var _todosListKey = GlobalKey<AnimatedListState>();
 
-  List<Todo> get _filteredList =>
-      _todosList.where((todo) => todo.title.contains(_searchText)).toList();
+  List<Todo> get _filteredList {
+    setState(() => _todosListKey = GlobalKey());
+
+    return _todosList
+        .where(
+          (element) => element.title.contains(_searchText),
+        )
+        .toList();
+  }
 
   void _searchTodo(String text) {
     setState(() {
@@ -100,6 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
               searchTodo: _searchTodo,
             ),
             TodoList(
+              listKey: _todosListKey,
               todosList: _filteredList,
               updateTodoDone: _updateTodoDone,
             ),
