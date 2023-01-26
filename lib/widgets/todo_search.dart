@@ -17,30 +17,28 @@ class _TodoSearchState extends State<TodoSearch> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(5),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: <Widget>[
-          Expanded(
-            flex: 7,
-            child: TextField(
-              decoration: const InputDecoration(labelText: 'Title'),
-              controller: searchTextController,
-            ),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: TextField(
+        onChanged: (_) => widget.searchTodo(searchTextController.text),
+        decoration: const InputDecoration(
+          contentPadding: EdgeInsets.all(0),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.black,
+            size: 20,
           ),
-          Expanded(
-            flex: 3,
-            child: ElevatedButton(
-              style: const ButtonStyle(
-                backgroundColor: MaterialStatePropertyAll<Color>(Colors.orange),
-              ),
-              onPressed: () {
-                widget.searchTodo(searchTextController.text);
-              },
-              child: const Text('Search'),
-            ),
-          )
-        ],
+          prefixIconConstraints: BoxConstraints(
+            maxHeight: 20,
+            minWidth: 25,
+          ),
+          border: InputBorder.none,
+          hintText: 'Search',
+          hintStyle: TextStyle(color: Colors.grey),
+        ),
       ),
     );
   }

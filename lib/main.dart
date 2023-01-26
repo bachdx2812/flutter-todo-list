@@ -96,24 +96,44 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[200],
       appBar: AppBar(
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            TodoSearch(
-              searchText: _searchText,
-              searchTodo: _searchTodo,
-            ),
-            TodoList(
-              listKey: _todosListKey,
-              todosList: _filteredList,
-              updateTodoDone: _updateTodoDone,
-            ),
-          ],
+        child: Container(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 20,
+            vertical: 15,
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              TodoSearch(
+                searchText: _searchText,
+                searchTodo: _searchTodo,
+              ),
+              Container(
+                margin: const EdgeInsets.only(
+                  top: 20,
+                  bottom: 20,
+                ),
+                child: const Text(
+                  'All ToDos',
+                  style: TextStyle(
+                    fontSize: 30,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              TodoList(
+                listKey: _todosListKey,
+                todosList: _filteredList,
+                updateTodoDone: _updateTodoDone,
+              ),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

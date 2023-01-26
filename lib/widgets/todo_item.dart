@@ -19,7 +19,9 @@ class TodoItem extends StatelessWidget {
     return SizeTransition(
       sizeFactor: animation,
       child: Container(
-        margin: const EdgeInsets.all(10),
+        margin: const EdgeInsets.symmetric(
+          vertical: 10,
+        ),
         decoration: BoxDecoration(
             color: Colors.blueAccent,
             border: Border.all(
