@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import './widgets/todo_list.dart';
 import './widgets/todo_search.dart';
@@ -36,16 +39,33 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Todo> _todosList = [
-    Todo(id: 1, title: "eat", done: true),
-    Todo(id: 2, title: "sleep", done: false),
-    Todo(id: 3, title: "code", done: false),
-    Todo(id: 4, title: "workout", done: false),
-    Todo(id: 5, title: "workout", done: false),
-    Todo(id: 6, title: "workout", done: false),
-    Todo(id: 7, title: "workout", done: false),
-    Todo(id: 8, title: "workout", done: false),
-  ];
+  List<Todo> _todosList = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    fetchData();
+  }
+
+  Future<void> fetchData() async {
+    _todosList = [];
+
+    final response = await http
+        .get(Uri.parse('http://localhost:3000/todos?title_like=$_searchText'));
+
+    if (response.statusCode == 200) {
+      final responseJson = json.decode(response.body);
+
+      setState(() {
+        for (Map todo in responseJson) {
+          _todosList.add(Todo.fromJson(todo));
+        }
+      });
+    } else {
+      throw Exception('Failed to load todo');
+    }
+  }
 
   void _updateTodoDone(int id, bool value) {
     int index = _todosList.indexWhere((todo) => todo.id == id); // -1
@@ -95,6 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       _searchText = text;
     });
+
+    fetchData();
   }
 
   @override

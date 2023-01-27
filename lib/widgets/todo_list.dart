@@ -24,10 +24,10 @@ class TodoList extends StatelessWidget {
         initialItemCount: todosList.length,
         itemBuilder: (context, index, animation) {
           var todo = todosList[index];
+
           return TodoItem(
             todo: todo,
             updateTodoDone: updateTodoDone,
-            animation: animation,
           );
         },
       ),

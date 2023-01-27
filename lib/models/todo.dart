@@ -8,4 +8,12 @@ class Todo {
     required this.title,
     required this.done,
   });
+
+  factory Todo.fromJson(Map<dynamic, dynamic> json) {
+    return Todo(
+      id: json['id'],
+      title: json['title'],
+      done: json['done'],
+    );
+  }
 }
