@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import './widgets/todo_list.dart';
 import './widgets/todo_search.dart';
 import './widgets/todo_new.dart';
-import './widgets/todo_item.dart';
 
 import 'models/todo.dart';
 
@@ -42,6 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
     Todo(id: 2, title: "sleep", done: false),
     Todo(id: 3, title: "code", done: false),
     Todo(id: 4, title: "workout", done: false),
+    Todo(id: 5, title: "workout", done: false),
+    Todo(id: 6, title: "workout", done: false),
+    Todo(id: 7, title: "workout", done: false),
+    Todo(id: 8, title: "workout", done: false),
   ];
 
   void _updateTodoDone(int id, bool value) {
@@ -55,7 +58,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _createNewToto(Todo todo) {
-    setState(() => _todosList.insert(0, todo));
+    setState(() => _todosListKey = GlobalKey());
+
     _todosListKey.currentState?.insertItem(0);
   }
 
@@ -100,24 +104,28 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 15,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              TodoSearch(
-                searchText: _searchText,
-                searchTodo: _searchTodo,
-              ),
-              Container(
+      body: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 2,
+          vertical: 5,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            TodoSearch(
+              searchText: _searchText,
+              searchTodo: _searchTodo,
+            ),
+            Expanded(
+              flex: 1,
+              child: Container(
                 margin: const EdgeInsets.only(
                   top: 20,
                   bottom: 20,
+                ),
+                padding: const EdgeInsets.only(
+                  left: 10,
                 ),
                 child: const Text(
                   'All ToDos',
@@ -127,13 +135,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),
-              TodoList(
+            ),
+            Expanded(
+              flex: 8,
+              child: TodoList(
                 listKey: _todosListKey,
                 todosList: _filteredList,
                 updateTodoDone: _updateTodoDone,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

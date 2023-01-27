@@ -12,18 +12,20 @@ class TodoSearch extends StatefulWidget {
 }
 
 class _TodoSearchState extends State<TodoSearch> {
-  final searchTextController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 15),
+      margin: const EdgeInsets.symmetric(
+        horizontal: 5,
+        vertical: 5,
+      ),
+      padding: const EdgeInsets.only(left: 10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
       ),
       child: TextField(
-        onChanged: (_) => widget.searchTodo(searchTextController.text),
+        onChanged: (value) => widget.searchTodo(value),
         decoration: const InputDecoration(
           contentPadding: EdgeInsets.all(0),
           prefixIcon: Icon(

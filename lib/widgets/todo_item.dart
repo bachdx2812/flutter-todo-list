@@ -23,18 +23,15 @@ class TodoItem extends StatelessWidget {
           vertical: 10,
         ),
         decoration: BoxDecoration(
-            color: Colors.blueAccent,
-            border: Border.all(
-              color: Colors.orangeAccent,
-              width: 2.0,
-            ),
-            borderRadius: BorderRadius.circular(10.0),
-            gradient: const LinearGradient(
-                colors: [Colors.black, Colors.orangeAccent]),
-            boxShadow: const [
-              BoxShadow(
-                  color: Colors.grey, blurRadius: 2.0, offset: Offset(2.0, 2.0))
-            ]),
+          color: Colors.blueAccent,
+          border: Border.all(
+            color: Colors.orangeAccent,
+            width: 2.0,
+          ),
+          borderRadius: BorderRadius.circular(10.0),
+          gradient:
+              const LinearGradient(colors: [Colors.black, Colors.orangeAccent]),
+        ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
