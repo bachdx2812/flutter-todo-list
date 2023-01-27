@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -77,10 +78,27 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _createNewToto(Todo todo) {
+  Future<void> _createNewToto(Todo todo) async {
     setState(() => _todosListKey = GlobalKey());
 
-    _todosListKey.currentState?.insertItem(0);
+    Map data = {
+      'title': todo.title,
+      'done': false.toString(),
+    };
+
+    final response = await http.post(
+      Uri.parse('http://localhost:3000/todos'),
+      body: data,
+    );
+
+    if (response.statusCode == 201) {
+      setState(() {
+        _todosList.insert(0, Todo.fromJson(json.decode(response.body)));
+        _todosListKey.currentState?.insertItem(0);
+      });
+    } else {
+      throw Exception('Failed to load todo');
+    }
   }
 
   void _startAddNewTodo(BuildContext ctx) {

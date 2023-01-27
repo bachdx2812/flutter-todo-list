@@ -3,42 +3,27 @@
     {
       "id": 1,
       "title": "eat",
-      "done": false
+      "done": "false"
     },
     {
       "id": 2,
       "title": "sleep",
-      "done": false
+      "done": "false"
     },
     {
       "id": 3,
       "title": "workout",
-      "done": false
+      "done": "false"
     },
     {
       "id": 4,
       "title": "eat banana",
-      "done": false
+      "done": "false"
     },
     {
-      "id": 5,
-      "title": "heat wave",
-      "done": false
-    },
-    {
-      "id": 6,
-      "title": "learn flutter",
-      "done": false
-    },
-    {
-      "id": 7,
-      "title": "read book",
-      "done": false
-    },
-    {
-      "id": 8,
-      "title": "drink water",
-      "done": false
+      "title": "yui",
+      "done": "false",
+      "id": 5
     }
   ]
 }

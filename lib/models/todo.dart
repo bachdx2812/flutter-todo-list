@@ -13,7 +13,7 @@ class Todo {
     return Todo(
       id: json['id'],
       title: json['title'],
-      done: json['done'],
+      done: json['done'].toLowerCase() == 'true',
     );
   }
 }
