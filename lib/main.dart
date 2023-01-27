@@ -68,13 +68,25 @@ class _MyHomePageState extends State<MyHomePage> {
     }
   }
 
-  void _updateTodoDone(int id, bool value) {
-    int index = _todosList.indexWhere((todo) => todo.id == id); // -1
+  Future<void> _updateTodoDone(int id, bool value) async {
+    int index = _todosList.indexWhere((todo) => todo.id == id);
 
-    if (index != -1) {
+    Map data = {
+      'done': value.toString(),
+      'title': _todosList[index].title,
+    };
+
+    final response = await http.put(
+      Uri.parse('http://localhost:3000/todos/$id'),
+      body: data,
+    );
+
+    if (response.statusCode == 200) {
       setState(() {
         _todosList[index].done = value;
       });
+    } else {
+      throw Exception('Failed to create todo');
     }
   }
 
@@ -97,7 +109,7 @@ class _MyHomePageState extends State<MyHomePage> {
         _todosListKey.currentState?.insertItem(0);
       });
     } else {
-      throw Exception('Failed to load todo');
+      throw Exception('Failed to create todo');
     }
   }
 
